@@ -6,7 +6,7 @@ user = User("John", "john@email.com", "FDUI87")
 def test_init_user():
   assert user.Name == "John"
   assert user.Email == "john@email.com"
-  assert user.Drivers_liscence == "FDUI87"
+  assert user.Drivers_license == "FDUI87"
   
 def test_create_post(monkeypatch, capsys):
   input = iter(["Johns †i†le", "I Just joined OOPX"])
@@ -28,15 +28,17 @@ def test_delete_post(monkeypatch, capsys):
   out, err = capsys.readouterr()
   assert out == ""
 
-user2 = User(**{"name":"Mike", "email":"mike@email.com", "drivers_liscence":"FDUI87"})
-user3 = User(**{"name":"Zack", "email":"zack@email.com", "drivers_liscence":"FDUI87"})       
+user2 = User(**{"name":"Mike", "email":"mike@email.com", "drivers_license":"FDUI87"})
+user3 = User(**{"name":"Zack", "email":"zack@email.com", "drivers_license":"FDUI87"})       
   
 def test_see_all_posts(monkeypatch, capsys):
   assert len(user.posts) == 0
   assert len(user.User_posts) == 0
   user.see_all_posts()
   out, err = capsys.readouterr()
-  assert out == ""
+  assert "Post deleted successfully!" in out
+  assert "You have no posts." in out
+
   input = iter(["Zack åttåck", "B1@ck H@t"])
   monkeypatch.setattr("builtins.input", lambda _x: next(input))
   user3.create_a_post()
